@@ -35,7 +35,7 @@ console.log("Registration Number:", lastRegNumber ); // Log the unique registrat
         nextRegNumber += 1;
     }
 
-    console.log("Generated Unique Registration Number:", regNumber); // Log the unique registration number
+    console.log("Generated Uniqu Registration Number:", regNumber); // Log the unique registration number
     return regNumber;
 };
 
@@ -47,18 +47,21 @@ const generatePassword = (lastname) => {
 };
 
 export const POST = async (req) => {
+
+console.log("hi")
     const excelData = await req.json();
 
- 
+ console.log("hi")
 
     const createdUsers = [];
     const errors = [];
-
+console.log("hi")
     for (const user of excelData) {
         const { firstname, lastname, role, email, studentData } = user;
-
+console.log("hi")
         // Check if the email is already registered
         const existingUser = await userModel.findOne({ email });
+console.log("h es")
         if (existingUser) {
             errors.push({
                 user,
@@ -66,6 +69,7 @@ export const POST = async (req) => {
             });
             continue;
         }
+
 
         // Generate registration number
         const regNumber = await generateRegNumber();
