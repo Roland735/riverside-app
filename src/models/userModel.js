@@ -15,7 +15,6 @@ const studentSchema = mongoose.Schema({
   regNumber: {
     type: String,
     required: [true, "Please enter the student's registration number"],
-    unique: true,
   },
   email: {
     type: String,
