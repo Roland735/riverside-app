@@ -9,10 +9,13 @@ connectDB();
 // Function to generate unique registration number
 const generateRegNumber = async () => {
     const lastUser = await userModel.findOne().sort({ regNumber: -1 });
+    
     let lastRegNumber = 0;
 
     if (lastUser) {
         lastRegNumber = parseInt(lastUser.regNumber.substring(3, 9));
+console.log("Registration Number:", lastRegNumber ); // Log the unique registration number
+
     }
 
     let nextRegNumber = lastRegNumber + 1;
