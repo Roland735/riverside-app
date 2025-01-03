@@ -49,7 +49,7 @@ const generatePassword = (lastname) => {
 export const POST = async (req) => {
     const excelData = await req.json();
 
-    await connectDB();
+ 
 
     const createdUsers = [];
     const errors = [];
