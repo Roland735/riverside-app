@@ -77,6 +77,7 @@ export const POST = async (req) => {
 
         try {
             // Create a new teacher if the role is "teacher"
+            console.log("Creating", firstname, "reg :" regNumber)
             if (role === "teacher") {
                 await Teacher.create({
                     name: `${firstname} ${lastname}`,
@@ -84,7 +85,7 @@ export const POST = async (req) => {
                 });
             }
 
-            console.log("Creating", firstname, "reg :" regNumber)
+
             // Create the user
             const newUser = await userModel.create({
                 firstname,
