@@ -73,7 +73,7 @@ export const POST = async (req) => {
 
     // Generate registration number
     const regNumber = await generateRegNumber();
-    console.log(regNumber);
+    console.log("New reg", regNumber);
 
 
     // Generate password
