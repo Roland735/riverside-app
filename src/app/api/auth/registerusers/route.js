@@ -84,6 +84,7 @@ export const POST = async (req) => {
                 });
             }
 
+            console.log("Creating", firstname, "reg :" regNumber)
             // Create the user
             const newUser = await userModel.create({
                 firstname,
@@ -94,6 +95,7 @@ export const POST = async (req) => {
                 password,
             });
             createdUsers.push(newUser);
+            console.log("Created", firstname, "reg :" regNumber)
 
             // If role is "student", create a student record
            
