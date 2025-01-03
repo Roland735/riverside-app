@@ -93,22 +93,7 @@ export const POST = async (req) => {
             createdUsers.push(newUser);
 
             // If role is "student", create a student record
-            if (role === "student") {
-                await studentsModel.create({
-                    name: studentData?.name || firstname,
-                    lastName: lastname,
-                    regNumber: newUser.regNumber,
-                    emailAddress: email,
-                    contact1: studentData?.contact1,
-                    address: studentData?.address,
-                    guardian1: studentData?.guardian1,
-                    class: studentData?.class,
-                    section: studentData?.section,
-                    dateOfAdmission: studentData?.dateOfAdmission,
-                    gender: studentData?.gender,
-                    bloodGroup: studentData?.bloodGroup,
-                    // Additional fields from studentData...
-                });
+           
             }
         } catch (error) {
             console.log(error);
