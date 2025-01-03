@@ -6,22 +6,36 @@ import { NextResponse } from "next/server";
 
 connectDB();
 
-// Function to generate registration number
+// Function to generate unique registration number
 const generateRegNumber = async () => {
     const lastUser = await userModel.findOne().sort({ regNumber: -1 });
-    console.log(lastUser);
-
     let lastRegNumber = 0;
+
     if (lastUser) {
         lastRegNumber = parseInt(lastUser.regNumber.substring(3, 9));
-    } else {
-        lastRegNumber = 0;
     }
 
-    const nextRegNumber = lastRegNumber + 1;
+    let nextRegNumber = lastRegNumber + 1;
     const yearLastDigit = new Date().getFullYear() % 100;
-    return `S${yearLastDigit.toString().padStart(2, "0")}${nextRegNumber.toString().padStart(6, "0")}A`;
+    let regNumber;
+
+    while (true) {
+        regNumber = `S${yearLastDigit.toString().padStart(2, "0")}${nextRegNumber.toString().padStart(6, "0")}A`;
+
+        // Check if the regNumber exists
+        const found = await userModel.findOne({ regNumber });
+        if (!found) {
+            break; // Exit the loop if no user is found
+        }
+
+        // Increment the number to try the next one
+        nextRegNumber += 1;
+    }
+
+    console.log("Generated Unique Registration Number:", regNumber); // Log the unique registration number
+    return regNumber;
 };
+
 
 // Function to generate password
 const generatePassword = (lastname) => {
