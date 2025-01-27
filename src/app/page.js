@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <main className="bg-white flex items-center justify-center min-h-screen">
-      <Link href="/login" className="px-3 py-2 bg-red-600 text-xl text-white">
+      <Link href="/auth/login" className="px-3 py-2 bg-red-600 text-xl text-white">
         Login
       </Link>
     </main>
