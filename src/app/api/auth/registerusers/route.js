@@ -1,44 +1,38 @@
 import { connectDB } from "@/configs/dbConfig";
 import { userModel } from "@/models/userModel";
 import { Teacher } from "@/models/Teacher";
-import { studentsModel } from "@/models/Demographic";
 import { NextResponse } from "next/server";
 
 connectDB();
 
-// Function to generate unique registration number
+// Function to generate unique registration number in the format "Sand####"
 const generateRegNumber = async () => {
-  const lastUser = await userModel.findOne().sort({ regNumber: -1 });
+  // Find the last user with a registration number that matches the pattern "Sand####"
+  const lastUser = await userModel.findOne({
+    regNumber: { $regex: /^Sand\d{4}$/ }
+  }).sort({ regNumber: -1 });
 
   let lastRegNumber = 0;
-
   if (lastUser) {
-    lastRegNumber = parseInt(lastUser.regNumber.substring(3, 9));
-    console.log("Registration Number:", lastRegNumber); // Log the unique registration number
-
+    // Extract the numeric portion after "Sand"
+    lastRegNumber = parseInt(lastUser.regNumber.substring(4, 8));
+    console.log("Last registration number:", lastRegNumber);
   }
 
   let nextRegNumber = lastRegNumber + 1;
-  const yearLastDigit = new Date().getFullYear() % 100;
   let regNumber;
 
+  // Ensure uniqueness in the unlikely event of a duplicate
   while (true) {
-    regNumber = `S${yearLastDigit.toString().padStart(2, "0")}${nextRegNumber.toString().padStart(6, "0")}A`;
-
-    // Check if the regNumber exists
+    regNumber = `Sand${nextRegNumber.toString().padStart(4, "0")}`;
     const found = await userModel.findOne({ regNumber });
-    if (!found) {
-      break; // Exit the loop if no user is found
-    }
-
-    // Increment the number to try the next one
+    if (!found) break;
     nextRegNumber += 1;
   }
 
-  console.log("Generated Uniqu Registration Number:", regNumber); // Log the unique registration number
+  console.log("Generated unique registration number:", regNumber);
   return regNumber;
 };
-
 
 // Function to generate password
 const generatePassword = (lastname) => {
@@ -47,21 +41,20 @@ const generatePassword = (lastname) => {
 };
 
 export const POST = async (req) => {
-
-  console.log("hi")
+  console.log("hi");
   const excelData = await req.json();
-
-  console.log("hi")
+  console.log("hi");
 
   const createdUsers = [];
   const errors = [];
-  console.log("hi")
+  console.log("hi");
+  
   for (const user of excelData) {
-    const { firstname, lastname, role, email, studentData } = user;
-    console.log("hi")
+    const { firstname, lastname, role, email } = user;
+    console.log("Processing user:", firstname);
+
     // Check if the email is already registered
     const existingUser = await userModel.findOne({ email });
-    console.log("h es")
     if (existingUser) {
       errors.push({
         user,
@@ -70,25 +63,21 @@ export const POST = async (req) => {
       continue;
     }
 
-
-    // Generate registration number
-    const regNumber = await generateRegNumber();
-    console.log("New reg", regNumber);
-
+    // Only generate a registration number if one is not already provided
+    const regNumber = user.regNumber ? user.regNumber : await generateRegNumber();
+    console.log("New reg:", regNumber);
 
     // Generate password
     const password = generatePassword(lastname);
 
     try {
-      // Create a new teacher if the role is "teacher"
-      console.log("Creating", firstname, "reg :", regNumber)
+      // If role is "teacher", create a new teacher record
       if (role === "teacher") {
         await Teacher.create({
           name: `${firstname} ${lastname}`,
           email: email,
         });
       }
-
 
       // Create the user
       const newUser = await userModel.create({
@@ -100,14 +89,9 @@ export const POST = async (req) => {
         password,
       });
       createdUsers.push(newUser);
-      console.log("Created", firstname, "reg :", regNumber)
-
-      // If role is "student", create a student record
-
-
+      console.log("Created", firstname, "with reg:", regNumber);
     } catch (error) {
       console.log(error);
-
       errors.push({
         user,
         message: error.message,
