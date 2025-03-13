@@ -13,13 +13,19 @@ export default function CreateSubject({ name }) {
     });
 
     useEffect(() => {
+        console.log("Component mounted or updated");
         fetchDepartments();
+        console.log("Departments fetched:", departments);
     }, []);
 
     const fetchDepartments = async () => {
+        console.log("Fetching departments...");
         const res = await fetch('/api/getDepartments');
+        console.log("Departments fetched:", res);
         const data = await res.json();
+        console.log("Departments data:", data);
         setDepartments(data.departments);
+        console.log("Departments set:", departments);
     };
 
     const handleChange = (e) => {
