@@ -68,7 +68,7 @@ export const POST = async (req) => {
     console.log("New reg:", regNumber);
 
     // Generate password
-    const password = generatePassword(lastname);
+   // const password = generatePassword(lastname);
 
     try {
       // If role is "teacher", create a new teacher record
