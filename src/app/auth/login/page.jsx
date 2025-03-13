@@ -22,7 +22,7 @@ export default async function Login() {
       <div className="">Please select your role</div>
       <div className="flex flex-row space-x-4 my-3 ">
         <Link
-          href={"student"}
+          href={"/auth/student"}
           className="flex flex-col  items-center justify-center border-2 border-red-500 rounded-md px-4 py-2 hover:bg-red-300 transition-colors duration-1000 "
         >
           <span className="">Student</span>
@@ -32,7 +32,7 @@ export default async function Login() {
         </Link>
         <Link
           className="flex flex-col items-center justify-center border-2 border-red-500 rounded-md px-4 py-2 hover:bg-red-300 transition-colors duration-1000"
-          href={"admin"}
+          href={"/auth/admin"}
         >
           <span className="">Admin</span>
           <span className="text-3xl text-red-500">
@@ -41,7 +41,7 @@ export default async function Login() {
         </Link>
         <Link
           className="flex flex-col items-center justify-center border-2 border-red-500 rounded-md px-4 py-2 hover:bg-red-300 transition-colors duration-1000"
-          href={"teacher"}
+          href={"/auth/teacher"}
         >
           <span className="">Teacher</span>
           <span className="text-3xl text-red-500">
@@ -50,7 +50,7 @@ export default async function Login() {
         </Link>
         <Link
           className="flex flex-col items-center justify-center border-2 border-red-500 rounded-md px-4 py-2 hover:bg-red-300 transition-colors duration-1000"
-          href={"parent"}
+          href={"/auth/parent"}
         >
           <span className="">Parent</span>
           <span className="text-3xl text-red-500">
