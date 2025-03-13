@@ -64,11 +64,11 @@ export const POST = async (req) => {
     }
 
     // Only generate a registration number if one is not already provided
-    const regNumber = user.regNumber ? user.regNumber : await generateRegNumber();
+    const regNumber = user.regNumber;
     console.log("New reg:", regNumber);
 
     // Generate password
-   // const password = generatePassword(lastname);
+    const password = generatePassword(lastname);
 
     try {
       // If role is "teacher", create a new teacher record
