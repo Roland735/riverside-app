@@ -8,6 +8,8 @@ const mongooseOpts = {
 
   // Force all reads to the primary node:
   readPreference: "primary",
+  readConcern: { level: 'majority' },
+  w: 'majority',
 
   // Ensure Mongoose uses the full SRV host list rather than a single host:
   directConnection: false,

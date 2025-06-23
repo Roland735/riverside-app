@@ -73,7 +73,7 @@ export default function ExamPeriods({ role }) {
                                         <div>
                                             <h3 className="text-xl font-semibold">{period.name}</h3>
                                             <p className="text-sm">{period.date}</p>
-
+                                            nice
                                         </div>
                                     </div>
                                 </Link>
