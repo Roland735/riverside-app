@@ -13,7 +13,11 @@ export const GET = async () => {
 
 
 
-        return NextResponse.json({ teachers, subjects }, { status: 200 });
+        return NextResponse.json({ teachers, subjects }, {
+            status: 200, headers: {
+                'Cache-Control': 'no-store, must-revalidate',
+            },
+        });
     } catch (error) {
         console.error('Error fetching teachers:', error);
         return NextResponse.json({ message: 'Failed to fetch teachers' }, { status: 500 });
