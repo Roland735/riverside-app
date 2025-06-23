@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FaCalendarAlt } from 'react-icons/fa';
 
-export default function ExamPeriods() {
+export default function ExamPeriods({ role }) {
     const [examPeriods, setExamPeriods] = useState([]); // Initialize as an empty array
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -57,12 +57,23 @@ export default function ExamPeriods() {
                         <h2 className="text-2xl font-semibold dark:text-white text-rose-600">{yearData.year}</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {yearData.periods.map((period, index) => (
-                                <Link key={index} href={`examTracking/${period.name}/${yearData.year}`}>
+                                <Link
+                                    key={index}
+                                    href={
+                                        role === "teacher"
+                                            ? `/dashboard/teacher/examTracking/${period.name}/${yearData.year}`
+                                            : role === "admin"
+                                                ? `/dashboard/admin/examTracking/${period.name}/${yearData.year}`
+                                                : `/dashboard/student/examTracking/${period.name}/${yearData.year}`
+                                    }
+                                    className="block"
+                                >
                                     <div className="cursor-pointer flex items-center p-4 bg-white dark:bg-rose-800 rounded-lg shadow-md dark:text-white text-gray-800 transition transform hover:scale-105 hover:shadow-lg">
                                         <FaCalendarAlt className="text-rose-500 dark:text-rose-300 mr-4" size={32} />
                                         <div>
                                             <h3 className="text-xl font-semibold">{period.name}</h3>
                                             <p className="text-sm">{period.date}</p>
+
                                         </div>
                                     </div>
                                 </Link>

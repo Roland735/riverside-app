@@ -7,7 +7,7 @@ connectDB();
 export async function GET(req) {
     try {
         // Fetch all departments and populate the subjects
-        const departments = await Department.find().populate('subjects');
+        const departments = await Department.find();
 
         return NextResponse.json({ departments }, { status: 200 });
     } catch (error) {

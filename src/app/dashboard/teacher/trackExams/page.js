@@ -44,7 +44,7 @@ function Dashboard() {
             <>
                 <MobileNavbar />
                 <div className="md:flex justify-between px-5 py-3 w-full items-center  shadow-2xl light-border">
-                    <ExamPeriods />
+                    <ExamPeriods role={session.user.role} />
                 </div>
 
                 <button
